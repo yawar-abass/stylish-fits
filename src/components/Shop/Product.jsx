@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Context } from "@/store/context";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,13 @@ import {
 const Product = ({ product }) => {
   const ctx = useContext(Context);
 
+  function handleAddToCart(product) {
+    // const count = ctx.cart.filter(
+    //   (cartProduct) => cartProduct.id === product.id
+    // );
+    ctx.addToCart(product);
+  }
+
   return (
     <div
       key={product.id}
@@ -31,38 +38,45 @@ const Product = ({ product }) => {
           alt={product.title}
           height={500}
           width={300}
-          className=""
+          className="w-auto h-auto"
         />
         <h4 className="pt-4 text-lg">{product.title}</h4>
         <p className="text-green-600 font-bold text-start text-xl">
           ${product.price}
         </p>
       </Link>
-      <Sheet>
+      <Sheet className="overflow-y-auto-auto">
         <SheetTrigger asChild>
-          <Button onClick={() => ctx.addToCart(product)}>Add to Cart</Button>
+          <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle>Cart Products</SheetTitle>
-            <SheetDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
-            </SheetDescription>
+            <SheetTitle>Cart</SheetTitle>
           </SheetHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input id="name" value="Pedro Duarte" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username
-              </Label>
-              <Input id="username" value="@peduarte" className="col-span-3" />
-            </div>
+            {ctx.cart?.length <= 0 ? (
+              <div>Your cart is currently empty.</div>
+            ) : (
+              ctx.cart.map((product, id) => {
+                return (
+                  <div key={product.id} className="flex gap-4">
+                    <Image
+                      src={product?.image}
+                      height={200}
+                      width={200}
+                      alt={product.title}
+                      className="w-32 h-28"
+                    />
+
+                    <div>
+                      <h5>{product.title}</h5>
+                      <p>Price : {product.price}</p>
+                      <p>{product.count}</p>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
           <SheetFooter>
             <SheetClose asChild>
