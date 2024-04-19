@@ -4,13 +4,10 @@ import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Context } from "@/store/context";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -19,13 +16,6 @@ import {
 
 const Product = ({ product }) => {
   const ctx = useContext(Context);
-
-  function handleAddToCart(product) {
-    // const count = ctx.cart.filter(
-    //   (cartProduct) => cartProduct.id === product.id
-    // );
-    ctx.addToCart(product);
-  }
 
   return (
     <div
@@ -47,7 +37,7 @@ const Product = ({ product }) => {
       </Link>
       <Sheet className="overflow-y-auto-auto">
         <SheetTrigger asChild>
-          <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
+          <Button onClick={() => ctx.addToCart(product)}>Add to Cart</Button>
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
@@ -59,7 +49,10 @@ const Product = ({ product }) => {
             ) : (
               ctx.cart.map((product, id) => {
                 return (
-                  <div key={product.id} className="flex gap-4">
+                  <div
+                    key={product.id}
+                    className="flex gap-4 border-b-2 border-dashed pb-2 border-gray-200"
+                  >
                     <Image
                       src={product?.image}
                       height={200}
@@ -71,7 +64,22 @@ const Product = ({ product }) => {
                     <div>
                       <h5>{product.title}</h5>
                       <p>Price : {product.price}</p>
-                      <p>{product.count}</p>
+                      <p>
+                        <span
+                          onClick={() => ctx.decrementProduct(product)}
+                          className="cursor-pointer hover:text-slate-900 text-xl font-semibold"
+                        >
+                          {" "}
+                          -{" "}
+                        </span>
+                        {product.count}{" "}
+                        <span
+                          onClick={() => ctx.addToCart(product)}
+                          className="cursor-pointer hover:text-slate-900 text-xl font-semibold"
+                        >
+                          +
+                        </span>
+                      </p>
                     </div>
                   </div>
                 );

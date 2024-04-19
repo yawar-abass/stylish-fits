@@ -11,31 +11,50 @@ export const ContextProvider = ({ children }) => {
 
   function addToCart(product) {
     //check if the product existed -> then update the count of that product
-    const existedProduct = cart.filter(
+    const existingProduct = cart.find(
       (prevProduct) => prevProduct.id === product.id
     );
-    // console.log(cart, existedProduct + "test");
-    if (existedProduct.length > 0) {
-      const temp = existedProduct[0];
-      const prevCount = temp.count;
-      setCart((prev) =>
-        prev.map((prevProduct) => {
-          if (prevProduct.id === temp.id) {
-            return { ...prevProduct, count: prevCount + 1 };
+    if (existingProduct) {
+      setCart((prevProducts) =>
+        prevProducts.map((prevProduct) => {
+          if (prevProduct.id === existingProduct.id) {
+            return { ...prevProduct, count: prevProduct.count + 1 };
           }
           return prevProduct;
         })
       );
-      return;
+    } else {
+      // If the product doesn't exist in the cart, add it with count 1
+      setCart((prevProducts) => [...prevProducts, { ...product, count: 1 }]);
     }
-
-    // if the product isn't in the cart
-    const cartProduct = { ...product, count: 1 };
-    setCart((prev) => [...prev, cartProduct]);
   }
 
   function removeProductFromCart(id) {
     setCart((cart) => cart.filter((product) => product.id !== id));
+  }
+
+  function decrementProduct(product) {
+    if (cart.length <= 0) {
+      return "Cart is Empty";
+    }
+    const existingProduct = cart.find(
+      (prevProduct) => prevProduct.id === product.id
+    );
+
+    if (existingProduct) {
+      if (existingProduct.count == 1) {
+        removeProductFromCart(existingProduct.id);
+      } else {
+        setCart((prevProducts) =>
+          prevProducts.map((prevProduct) => {
+            if (prevProduct.id === existingProduct.id) {
+              return { ...prevProduct, count: prevProduct.count - 1 };
+            }
+            return prevProduct;
+          })
+        );
+      }
+    }
   }
 
   function getCartProducts() {
@@ -47,6 +66,7 @@ export const ContextProvider = ({ children }) => {
     addToCart,
     removeProductFromCart,
     getCartProducts,
+    decrementProduct,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
