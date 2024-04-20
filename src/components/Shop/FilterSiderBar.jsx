@@ -1,15 +1,24 @@
 "use client";
 
 import React, { useState } from "react";
-import PriceRange from "./PriceRange";
 
-const FilterSiderBar = ({ updateProducts }) => {
+const FilterSiderBar = ({
+  filterProductsByCategory,
+  filterProductsByPrice,
+}) => {
   const [selectedCategory, setSelectedCatagory] = useState("");
+  const [price, setPrice] = useState(30);
 
   const handleSelection = (e) => {
     setSelectedCatagory(e.target.value);
     // lifting state up
-    updateProducts(e.target.value);
+    filterProductsByCategory(e.target.value);
+  };
+
+  const priceFilterHandler = (e) => {
+    setPrice(e.target.value);
+    filterProductsByPrice(e.target.value);
+    console.log("price value", e.target.value);
   };
 
   console.log(selectedCategory);
@@ -20,6 +29,34 @@ const FilterSiderBar = ({ updateProducts }) => {
       <div className=" w-auto p-2  ">
         <h3 className="pb-2 text-lg ">By Category</h3>
         <div className="space-y-2 font-light">
+          <div className="flex items-center space-x-2">
+            <input
+              type="radio"
+              id="mens"
+              name="category"
+              value=""
+              className=""
+              checked={selectedCategory == ""}
+              onChange={handleSelection}
+            />
+            <label htmlFor="mens" className="text-sm font-medium leading-none">
+              All
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <input
+              type="radio"
+              id="mens"
+              name="category"
+              value="electronics"
+              className=""
+              checked={selectedCategory == "electronics"}
+              onChange={handleSelection}
+            />
+            <label htmlFor="mens" className="text-sm font-medium leading-none">
+              Electronics
+            </label>
+          </div>
           <div className="flex items-center space-x-2">
             <input
               type="radio"
@@ -68,7 +105,22 @@ const FilterSiderBar = ({ updateProducts }) => {
           </div>
         </div>
       </div>
-      <PriceRange />
+      <div className=" flex space-y-2 flex-col p-2 ">
+        <h3 className=" text-lg ">By Price</h3>
+        <div>
+          <input
+            type="range"
+            min="10"
+            max="500"
+            step="10"
+            value={price}
+            onChange={priceFilterHandler}
+            className="w-full  bg-gradient-to-r from-slate-500 to-slate-700 rounded-full outline-none"
+            style={{ color: "black" }}
+          />
+          <p>Price: ${price}</p>
+        </div>
+      </div>
     </>
   );
 };

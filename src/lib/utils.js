@@ -12,9 +12,12 @@ export async function getAllProducts() {
 }
 
 export async function getProductsByCategory(category) {
+  if (category.length <= 0) {
+    return await getAllProducts();
+  }
   return fetch(`https://fakestoreapi.com/products/category/${category}`)
     .then((res) => res.json())
     .catch((error) =>
-      console.log(`Can't fetch the ${category}  Products: `, error.message)
+      console.log(`Can't fetch the ${category} Products: `, error.message)
     );
 }
