@@ -1,6 +1,8 @@
+"use client";
+
+import { useContext } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Context } from "@/store/context";
 import {
   Sheet,
   SheetClose,
@@ -11,33 +13,61 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Image from "next/image";
 
-export function SheetDemo() {
+export function Cart({ product, ...props }) {
+  const ctx = useContext(Context);
   return (
-    <Sheet>
+    <Sheet className="overflow-y-auto-auto">
       <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button onClick={() => ctx.addToCart(product)}>Add to Cart</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
-          </SheetDescription>
+          <SheetTitle>Cart</SheetTitle>
         </SheetHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
+          {ctx.cart?.length <= 0 ? (
+            <div>Your cart is currently empty.</div>
+          ) : (
+            ctx.cart.map((product, id) => {
+              return (
+                <div
+                  key={product.id}
+                  className="flex gap-4 border-b-2 border-dashed pb-2 border-gray-200"
+                >
+                  <Image
+                    src={product?.image}
+                    height={200}
+                    width={200}
+                    alt={product.title}
+                    className="w-32 h-28"
+                  />
+
+                  <div>
+                    <h5>{product.title}</h5>
+                    <p>Price : {product.price}</p>
+                    <p>
+                      <span
+                        onClick={() => ctx.decrementProduct(product)}
+                        className="cursor-pointer hover:text-slate-900 text-xl font-semibold"
+                      >
+                        {" "}
+                        -{" "}
+                      </span>
+                      {product.count}{" "}
+                      <span
+                        onClick={() => ctx.addToCart(product)}
+                        className="cursor-pointer hover:text-slate-900 text-xl font-semibold"
+                      >
+                        +
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              );
+            })
+          )}
         </div>
         <SheetFooter>
           <SheetClose asChild>

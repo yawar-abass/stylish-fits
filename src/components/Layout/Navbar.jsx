@@ -66,12 +66,14 @@ export default function Navbar() {
           <Input type="email" placeholder="Search our store" />
         </div>
         <div className="w-1/3">
-          <Image
-            src="/assets/images/logo-black.png"
-            alt="Stylish Fits"
-            width={150}
-            height={100}
-          />
+          <Link href="/">
+            <Image
+              src="/assets/images/logo-black.png"
+              alt="Stylish Fits"
+              width={150}
+              height={100}
+            />
+          </Link>
         </div>
         <div className="flex  space-x-5">
           <FaRegUser size="25px" />
@@ -88,18 +90,25 @@ export default function Navbar() {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted  no-underline outline-none focus:shadow-md"
                         href="/"
                       >
                         {/* <Icons.logo className="h-6 w-6" /> */}
-                        <div className="mb-2 mt-4 text-lg font-medium">
+                        {/* <div className="mb-2 mt-4 text-lg font-medium">
                           shadcn/ui
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
                           Beautifully designed components that you can copy and
                           paste into your apps. Accessible. Customizable. Open
                           Source.
-                        </p>
+                        </p> */}
+                        <Image
+                          src="/assets/images/collections/c4.jpg"
+                          width={1400}
+                          height={1500}
+                          alt="navbar image "
+                          className="w-full h-full object-cover rounded-md"
+                        />
                       </a>
                     </NavigationMenuLink>
                   </li>
@@ -125,18 +134,25 @@ export default function Navbar() {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted  no-underline outline-none focus:shadow-md"
                         href="/"
                       >
                         {/* <Icons.logo className="h-6 w-6" /> */}
-                        <div className="mb-2 mt-4 text-lg font-medium">
+                        {/* <div className="mb-2 mt-4 text-lg font-medium">
                           shadcn/ui
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
                           Beautifully designed components that you can copy and
                           paste into your apps. Accessible. Customizable. Open
                           Source.
-                        </p>
+                        </p> */}
+                        <Image
+                          src="/assets/images/collections/c2.jpg"
+                          width={1400}
+                          height={1500}
+                          alt="navbar image "
+                          className="w-full h-full object-cover rounded-md"
+                        />
                       </a>
                     </NavigationMenuLink>
                   </li>
