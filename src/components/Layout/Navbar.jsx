@@ -76,7 +76,10 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="flex  space-x-5">
-          <FaRegUser size="25px" />
+          <Link href="/login">
+            <FaRegUser size="25px" />
+          </Link>
+
           <MdOutlineShoppingBag size="26px" />
         </div>
       </div>

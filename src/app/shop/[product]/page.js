@@ -20,7 +20,10 @@ const ProductPage = async ({ params }) => {
         <p>
           Rs: <strong>{price}</strong>
         </p>
-        <Cart product={product} />
+        <div className="space-x-4">
+          <Cart product={product} />
+          <Cart product={product} showCart="Show Cart" />
+        </div>
         {/* <button>Buy Now</button> */}
       </div>
     </div>

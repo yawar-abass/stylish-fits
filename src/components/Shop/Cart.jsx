@@ -15,12 +15,16 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 
-export function Cart({ product, ...props }) {
+export function Cart({ product, showCart, className }) {
   const ctx = useContext(Context);
   return (
-    <Sheet className="overflow-y-auto-auto">
+    <Sheet className={`overflow-y-auto-auto ${className}`}>
       <SheetTrigger asChild>
-        <Button onClick={() => ctx.addToCart(product)}>Add to Cart</Button>
+        {showCart ? (
+          <Button>{showCart}</Button>
+        ) : (
+          <Button onClick={() => ctx.addToCart(product)}>Add to Cart</Button>
+        )}
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
