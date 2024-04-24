@@ -14,14 +14,23 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Image from "next/image";
+import { MdOutlineShoppingBag } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 export function Cart({ product, showCart, className }) {
   const ctx = useContext(Context);
+
+  const router = useRouter();
+
   return (
     <Sheet className={`overflow-y-auto-auto ${className}`}>
       <SheetTrigger asChild>
         {showCart ? (
-          <Button>{showCart}</Button>
+          showCart === "icon" ? (
+            <MdOutlineShoppingBag className="cursor-pointer" size="26px" />
+          ) : (
+            <Button>showCart</Button>
+          )
         ) : (
           <Button onClick={() => ctx.addToCart(product)}>Add to Cart</Button>
         )}
@@ -75,7 +84,9 @@ export function Cart({ product, showCart, className }) {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button disabled={ctx.cart.length <= 0 ? true : false}>
+              Checkout
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

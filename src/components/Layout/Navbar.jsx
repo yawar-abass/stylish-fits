@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Input } from "../ui/input";
 import Image from "next/image";
+import { Button } from "../ui/button";
+import { Cart } from "../Shop/Cart";
 
 const components = [
   {
@@ -62,8 +64,9 @@ export default function Navbar() {
   return (
     <nav className="flex flex-col container">
       <div className=" flex justify-between p-3 ">
-        <div className="w-1/3 ">
+        <div className="w-1/3 flex  gap-2 ">
           <Input type="email" placeholder="Search our store" />
+          <Button>Search</Button>
         </div>
         <div className="w-1/3">
           <Link href="/">
@@ -79,8 +82,7 @@ export default function Navbar() {
           <Link href="/login">
             <FaRegUser size="25px" />
           </Link>
-
-          <MdOutlineShoppingBag size="26px" />
+          <Cart showCart="icon" />
         </div>
       </div>
       <div className="flex items-center justify-center pb-3 ">

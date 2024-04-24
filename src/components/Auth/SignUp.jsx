@@ -143,7 +143,7 @@ const SignupComponent = () => {
               name="firstname"
             /> */}
           </div>
-          <Button className="text-center  w-1/2">Signin</Button>
+          <Button className="text-center  w-1/2">Signup</Button>
         </form>
         <p className="text-center">
           If you Have one.{" "}
