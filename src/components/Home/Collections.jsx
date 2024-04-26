@@ -10,7 +10,7 @@ const Collections = () => {
           className="h-[500px] w-1/4 flex items-center justify-center"
           style={{ backgroundImage: "url(/assets/images/collections/c2.jpg)" }}
         >
-          <span className="text-white text-xl uppercase">Women's</span>
+          <span className="text-white text-xl uppercase">Women&apso;s</span>
         </div>
         <div
           className="h-[500px] w-1/4 flex items-center justify-center"

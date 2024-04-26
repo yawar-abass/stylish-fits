@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const FilterSiderBar = ({
   filterProductsByCategory,
@@ -15,10 +15,21 @@ const FilterSiderBar = ({
     filterProductsByCategory(e.target.value);
   };
 
+  //douncing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      filterProductsByPrice(price);
+      console.log(price, "debounce");
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [price]);
+
   const priceFilterHandler = (e) => {
     setPrice(e.target.value);
-    filterProductsByPrice(e.target.value);
-    console.log("price value", e.target.value);
+
+    // filterProductsByPrice(e.target.value);
+    // console.log("price value", e.target.value);
   };
 
   console.log(selectedCategory);
