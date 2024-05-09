@@ -15,7 +15,7 @@ const FilterSiderBar = ({
     filterProductsByCategory(e.target.value);
   };
 
-  //douncing
+  //debouncing
   useEffect(() => {
     const timer = setTimeout(() => {
       filterProductsByPrice(price);

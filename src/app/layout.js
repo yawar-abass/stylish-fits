@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Layout/Navbar";
 import TopBar from "@/components/Layout/TopBar";
 import { ContextProvider } from "@/store/context";
+import StoreProvider from "@/components/Providers/StoreProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -15,11 +16,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <ContextProvider>
+        {/* <ContextProvider> */}
+        <StoreProvider>
           <TopBar />
           <Navbar />
+
           {children}
-        </ContextProvider>
+        </StoreProvider>
+        {/* </ContextProvider> */}
       </body>
     </html>
   );

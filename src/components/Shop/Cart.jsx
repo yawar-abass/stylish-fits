@@ -16,9 +16,13 @@ import {
 import Image from "next/image";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, decrementProduct } from "@/lib/features/cart";
 
 export function Cart({ product, showCart, className }) {
-  const ctx = useContext(Context);
+  // const ctx = useContext(Context);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
 
   const router = useRouter();
 
@@ -32,7 +36,9 @@ export function Cart({ product, showCart, className }) {
             <Button>showCart</Button>
           )
         ) : (
-          <Button onClick={() => ctx.addToCart(product)}>Add to Cart</Button>
+          <Button onClick={() => dispatch(addToCart(product))}>
+            Add to Cart
+          </Button>
         )}
       </SheetTrigger>
       <SheetContent>
@@ -40,10 +46,10 @@ export function Cart({ product, showCart, className }) {
           <SheetTitle>Cart</SheetTitle>
         </SheetHeader>
         <div className="grid gap-4 py-4">
-          {ctx.cart?.length <= 0 ? (
+          {cartItems?.length <= 0 ? (
             <div>Your cart is currently empty.</div>
           ) : (
-            ctx.cart.map((product, id) => {
+            cartItems.map((product, id) => {
               return (
                 <div
                   key={product.id}
@@ -62,7 +68,7 @@ export function Cart({ product, showCart, className }) {
                     <p>Price : {product.price}</p>
                     <p>
                       <span
-                        onClick={() => ctx.decrementProduct(product)}
+                        onClick={() => dispatch(decrementProduct(product))}
                         className="cursor-pointer hover:text-slate-900 text-xl font-semibold"
                       >
                         {" "}
@@ -70,7 +76,7 @@ export function Cart({ product, showCart, className }) {
                       </span>
                       {product.count}{" "}
                       <span
-                        onClick={() => ctx.addToCart(product)}
+                        onClick={() => dispatch(addToCart(product))}
                         className="cursor-pointer hover:text-slate-900 text-xl font-semibold"
                       >
                         +
@@ -84,7 +90,7 @@ export function Cart({ product, showCart, className }) {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button disabled={ctx.cart.length <= 0 ? true : false}>
+            <Button disabled={cartItems.length <= 0 ? true : false}>
               Checkout
             </Button>
           </SheetClose>
